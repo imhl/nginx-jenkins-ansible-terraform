@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', credentialsId: 'Github', url: 'git@github.com:imhl/nginx-jenkins-ansible-terraform.git'
+                git branch: 'master',credentialsId: 'mygitkey', url: 'git@github.com:imhl/nginx-jenkins-ansible-terraform.git'
             }
         }
     
@@ -18,11 +18,11 @@ pipeline {
             steps {
                 script {
                     if (params.Action == "apply") {
-                        sh 'terraform init terraform/static-site'
-                        sh 'terraform apply -var "name=hello" -var "group=web" -var "region=us-east-1" -var "profile=default" --auto-approve terraform/static-site'
+                        sh 'terraform -chdir=terraform/static-site init'
+                        sh 'terraform -chdir=terraform/static-site apply -var="name=hello" -var="group=web" -var="region=us-east-1" -var="profile=default" --auto-approve'
                     }
                     else {
-                        sh 'terraform destroy -var "name=hello" -var "group=web" -var "region=us-east-1" -var "profile=scottyfullstack" --auto-approve terraform/static-site'
+                        sh 'terraform -chdir=terraform/static-site destroy -var="name=hello" -var="group=web" -var="region=us-east-1" -var="profile=default" --auto-approve'
                     }
                 }
             }
