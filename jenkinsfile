@@ -34,6 +34,7 @@ pipeline {
                  if (params.Action == "apply") {
                     sh 'ansible-playbook -i /etc/ansible/aws_ec2.yaml ansible/static-site/site.yaml'
                 }
+              }
             }
         }
     }
