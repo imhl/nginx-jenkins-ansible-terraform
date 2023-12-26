@@ -10,7 +10,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master',credentialsId: 'mygitkey', url: 'git@github.com:imhl/nginx-jenkins-ansible-terraform.git'
+                script {
+                    if (params.Action == "apply"){
+                        git branch: 'master',credentialsId: 'mygitkey', url: 'git@github.com:imhl/nginx-jenkins-ansible-terraform.git'
+                    }
+                }
             }
         }
     
